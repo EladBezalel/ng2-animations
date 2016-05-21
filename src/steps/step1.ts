@@ -1,5 +1,6 @@
-//our root app component
-import {animation, style, animate, state, transition, Component, Input} from '@angular/core'
+import {animation, style, animate, state, transition, Component } from '@angular/core'
+
+import {AbstractStep} from "./AbstractStep";
 
 @Component({
   selector: 'step-1',
@@ -47,6 +48,21 @@ import {animation, style, animate, state, transition, Component, Input} from '@a
     ]),
   ]
 })
-export class Step1 {
-  @Input() state;
+export class Step1 extends AbstractStep {
+  state = 'void';
+
+  constructor() {
+    super(1);
+  }
+
+  play() {
+    this.state = 'active';
+    
+    return this.timeout.$promise(500)
+      .then(() => {
+        this.state = 'turned';
+
+        return this.timeout.$promise(600);
+      })
+  }
 }

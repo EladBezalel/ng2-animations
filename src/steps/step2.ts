@@ -1,4 +1,5 @@
-import {Component, animation, state, style, transition, animate} from '@angular/core';
+import {Component, animation, state, style, transition, animate} from "@angular/core";
+import {AbstractStep} from "./AbstractStep";
 
 @Component({
   selector: 'step-2',
@@ -44,12 +45,8 @@ import {Component, animation, state, style, transition, animate} from '@angular/
         borderRadius: '3px',
         boxShadow: '0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)'
       })),
-      transition('void => end', [
-        animate('1s .5s ease')
-      ]),
-      transition('end => start', [
-        animate('1s ease')
-      ])
+      transition('void => end' , [ animate('1s .5s ease') ]),
+      transition('end => start', [ animate('1s ease') ])
     ]),
     animation('container', [
       state('start', style({
@@ -68,28 +65,22 @@ import {Component, animation, state, style, transition, animate} from '@angular/
       ])
     ]),
     animation('separator', [
-      state('start', style({
-        width: 0
-      })),
-      state('end', style({
-        width: '128px'
-      })),
-      transition('void => end', [
-        animate('.6s .7s ease')
-      ]),
-      transition('end => start', [
-        animate('1s ease')
-      ])
+      state('start', style({ width: 0 })),
+      state('end', style({ width: '128px' })),
+      transition('void => end' , [ animate('1s .5s ease') ]),
+      transition('end => start', [ animate('1s ease') ])
     ])
   ]
 })
 
-export class Step2 {
-  state = 'end';
+export class Step2 extends AbstractStep {
+  state = 'void';
 
-  // constructor () {
-  //   setTimeout(() => {
-  //     this.state = 'start'
-  //   }, 1000)
-  // }
+  constructor() { super(2); }
+
+  play() {
+    this.state = 'end';
+
+    return this.timeout.$promise(1500);
+  }
 }
