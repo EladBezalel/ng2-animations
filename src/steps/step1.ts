@@ -1,4 +1,4 @@
-import {animation, style, animate, state, transition, Component } from '@angular/core'
+import {animation, style, animate, state, transition, group, Component } from '@angular/core'
 
 import {AbstractStep} from "./AbstractStep";
 
@@ -40,10 +40,16 @@ import {AbstractStep} from "./AbstractStep";
         animate('.6s ease')
       ]),
       transition('active => turned', [
-        style({
-          transform: 'rotate(-90deg)'
-        }),
-        animate('.6s ease')
+        group([
+          animate('.8s ease', [
+            style({ transform: 'rotate(-90deg)' }),
+            style({ transform: 'rotate(0deg)'}),
+          ]),
+          animate('.5s .2s ease', [
+            style({ width: '300px' }),
+            style({ width: '600px' })
+          ])
+        ])
       ])
     ]),
   ]
@@ -57,12 +63,12 @@ export class Step1 extends AbstractStep {
 
   play() {
     this.state = 'active';
-    
-    return this.timeout.$promise(500)
+
+    return this.timeout.$promise(600)
       .then(() => {
         this.state = 'turned';
 
-        return this.timeout.$promise(600);
+        return this.timeout.$promise(1100);
       })
   }
 }
