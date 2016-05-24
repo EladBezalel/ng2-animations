@@ -1,7 +1,8 @@
 import {Component, animation, state, style, transition, animate, group} from "@angular/core";
-import {AbstractStep} from "./AbstractStep";
+import {AbstractStep} from "./step.abstract";
 
 var boxShadow = '0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12)';
+
 @Component({
   selector: 'step-2',
   styles: [`
@@ -25,13 +26,13 @@ var boxShadow = '0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1
   `],
   template: `
     <div class="container" @container="state">
-      <div class="item" @item1="state"></div>
+      <div class="item" @trigger1="state"></div>
       <div @separator="state"></div>
-      <div class="item" @item2="state"></div>
+      <div class="item" @trigger2="state"></div>
     </div>
   `,
   animations: [
-    animation('item1', [
+    animation('trigger1', [
       state('spliced', style({ borderRadius: '3px', boxShadow: boxShadow })),
       state('joined', style({ borderRadius: '3px 0 3px 0x' })),
       transition('void => spliced', [
@@ -45,7 +46,7 @@ var boxShadow = '0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1
         ])
       ])
     ]),
-    animation('item2', [
+    animation('trigger2', [
       state('void', style({ boxShadow: `-8px 0 0 white, ${boxShadow}` })),
       state('spliced', style({ borderRadius: '3px', boxShadow: boxShadow })),
       state('joined', style({ borderRadius: '0 3px 0 3px' })),
@@ -100,20 +101,18 @@ var boxShadow = '0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1
     ])
   ]
 })
-
 export class Step2 extends AbstractStep {
-  state = 'void';
-
   constructor() { super(2); }
 
+  /**
+   * Component animated play
+   */
   play() {
     this.state = 'spliced';
-
-    return this.timeout.$promise(1500)
+    return this.delay(1500)
       .then(() => {
         this.state = 'joined';
-
-        return this.timeout.$promise(1000);
+        return this.delay(1000);
       });
   }
 }

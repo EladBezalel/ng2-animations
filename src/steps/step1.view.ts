@@ -1,6 +1,5 @@
-import {animation, style, animate, state, transition, group, Component } from '@angular/core'
-
-import {AbstractStep} from "./AbstractStep";
+import {animation, style, animate, state, transition, group, Component} from "@angular/core";
+import {AbstractStep} from "./step.abstract";
 
 @Component({
   selector: 'step-1',
@@ -14,10 +13,10 @@ import {AbstractStep} from "./AbstractStep";
     }
   `],
   template: `
-    <div class="item" @state="state"></div>
+    <div class="item" @trigger="status"></div>
   `,
   animations: [
-    animation('state', [
+    animation('trigger', [
       state('void', style({
         height: '0px',
         width: '200px',
@@ -55,20 +54,18 @@ import {AbstractStep} from "./AbstractStep";
   ]
 })
 export class Step1 extends AbstractStep {
-  state = 'void';
+  constructor() { super( 1 ); }
 
-  constructor() {
-    super(1);
-  }
-
+  /**
+   *
+   */
   play() {
     this.state = 'active';
 
-    return this.timeout.$promise(600)
+    return this.delay(500)
       .then(() => {
         this.state = 'turned';
-
-        return this.timeout.$promise(1100);
+        return this.delay(600);
       })
   }
 }
