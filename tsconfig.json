@@ -1,20 +1,17 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "module": "commonjs",
-    "target": "es5",
-    "moduleResolution": "node",
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "noImplicitAny": false,
-    "sourceMap": false,
-    "paths": {
-      "@angular/*": [
-        "./lib/@angular/*"
-      ]
-    }
+    "experimentalDecorators": true,
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "sourceMap": true
   },
   "exclude": [
     "node_modules"
+  ],
+  "files": [
+    "typings/index.d.ts"
   ]
 }

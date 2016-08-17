@@ -4,6 +4,5 @@
 
 ## How to run
 ```
-> npm i -g live-server
-> live-server
+> npm run dev
 ```
